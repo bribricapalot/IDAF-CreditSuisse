@@ -1,2 +1,2 @@
 # IDAF-CreditSuisse
-Our PRWR Project by Telmo, Brian and Alan
+Our PRWR Project made by Telmo, Brian and Alan
