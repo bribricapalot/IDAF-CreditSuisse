@@ -35,3 +35,4 @@ jobs:
             **/.vscode/**
             **/.env
             **/config.php
+            **/*.sql
