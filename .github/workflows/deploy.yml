@@ -36,3 +36,5 @@ jobs:
             **/.env
             **/config.php
             **/*.sql
+            **/*.md
+            **/*.txt
