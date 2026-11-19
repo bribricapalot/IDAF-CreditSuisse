@@ -1,11 +1,13 @@
-async function getStockData() {
+google.charts.load('current', { packages: ['corechart'] });
+google.charts.setOnLoadCallback(loadAndDraw);
+
+async function loadAndDraw() {
     try {
         const response = await fetch("/api/api.php");
         const data = await response.json();
         
         if (data.success) {
-            console.log("Daten von der API:", data.data);
-            // Hier später das DOM anpassen (mit Liniendiagramm für Aktienverlauf)
+            drawChart(data.data);
         } else {
             console.error("API-Fehler:", data.error);
         }
@@ -13,4 +15,22 @@ async function getStockData() {
         console.error("Fehler:", error);
     }
 }
-getStockData();
+
+function drawChart(dataFromApi) {
+   const data = new google.visualization.DataTable();
+	data.addColumn('date', 'Datum');
+	data.addColumn('number', 'Preis');
+	data.addRows(dataFromApi.map(item => [new Date(item.datum), item.kurs != null ? Number(item.kurs) : null
+]));
+    
+    
+    const options = {
+        title: 'Aktienkursverlauf für Credit Suisse',
+        hAxis: { title: 'Datum' },
+        vAxis: { title: 'Preis' },
+        legend: 'none'
+    };
+    
+    const chart = new google.visualization.LineChart(document.getElementById('stockChart'));
+    chart.draw(data, options);
+}
